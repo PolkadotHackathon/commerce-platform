@@ -7,7 +7,7 @@ const CookieConsent = ({ onAccept, onDecline }) => {
                 {/*<img src="/assets/images/cookie-icon.svg" alt="Cookie Icon" style={styles.icon} />*/}
                 <h2 style={styles.title}>Cookies Consent</h2>
                 <p style={styles.text}>
-                    This website use cookies to help you have a superior and more admissible browsing experience on the website.
+                    This website use cookies to provide a superior and more personalized browsing experience.
                     <a href="#" style={styles.link}>Read more</a>
                 </p>
                 <div style={styles.buttonContainer}>
