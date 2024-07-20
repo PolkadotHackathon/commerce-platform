@@ -5,13 +5,22 @@ import { CategoryProvider } from "@/contexts/CategoryContext";
 import { CartProvider } from "@/contexts/CartContext";
 import CustomNavbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
-import React, { ReactNode, useEffect } from "react";
+import React, { ReactNode, useEffect, useState } from "react";
+import CryptoJS from 'crypto-js';
 
 interface LayoutProps {
   children: ReactNode;
 }
 
+const SECRET_KEY = 'bob';
+
 const Layout = ({ children }: LayoutProps) => {
+
+  const [api, setApi] = useState(null);
+  const [keyring, setKeyring] = useState(null);
+  const [accounts, setAccounts] = useState([]);
+  const [selectedAccount, setSelectedAccount] = useState(null);
+
   useEffect(() => {
     const handlePress = (event: any) => {
       const target = event.target;
@@ -20,7 +29,24 @@ const Layout = ({ children }: LayoutProps) => {
       const id = target.id;
       if(!id) return;
 
-      
+      // Pad string to 64 bytes
+      const padded = id.padEnd(47, ' ');
+
+      if (padded.length !== 47) {
+        console.error('ID is more than 47 characters, unable to record telemetry.');
+        return;
+      }
+
+      // Encrypt
+      const encrypted = CryptoJS.AES.encrypt(padded, SECRET_KEY);
+      const encryptedBytes = CryptoJS.enc.Base64.parse(encrypted.toString());
+      const encryptedArray = Array.from(encryptedBytes.words);
+
+      // Decrupt
+      // const bytes = CryptoJS.AES.decrypt(encrypted, SECRET_KEY);
+      // const decrypted = bytes.toString(CryptoJS.enc.Utf8);
+      // console.log('Decrypted:', decrypted);
+
     };
 
     // Add event listeners
