@@ -1,0 +1,19 @@
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  background-color: #f8f9fa;
+}
+
+a {
+  text-decoration: none;
+  color: #ff6f00;
+}
+
+nav a {
+  color: inherit;
+}
+
+nav i {
+  font-size: 1.2rem;
+}
