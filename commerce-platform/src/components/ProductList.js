@@ -6,22 +6,22 @@ import fetchProducts from '../api/fetchProducts';
 
 const ProductList = () => {
     const { selectedCategory } = useCategory();
-    const [items, setItems] = useState([]);
+    const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        const getItems = async () => {
-            const items = await fetchProducts(selectedCategory);
-            setItems(items);
+        const getProducts = async () => {
+            const products = await fetchProducts(selectedCategory);
+            setProducts(products);
         };
-        getItems();
+        getProducts();
     }, [selectedCategory]);
 
     return (
         <div style={styles.productList}>
-            {items.length === 0 ? (
+            {products.length === 0 ? (
                 <p>Loading...</p>
             ) : (
-                items.map((item) => (
+                products.map((item) => (
                     <div key={item.id} style={styles.product}>
                         <div style={styles.imageContainer}>
                             <img src={item.imageUrl} alt={item.name} style={styles.image} />
@@ -60,7 +60,7 @@ const styles = {
         alignItems: 'center',
         justifyContent: 'center',
         width: '100%',
-        height: '200px', // Set a fixed height for the image container
+        height: '200px',
         overflow: 'hidden'
     },
     image: {
