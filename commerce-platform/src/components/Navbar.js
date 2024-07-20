@@ -50,27 +50,45 @@ const Navbar = () => {
                             {cartItems.length === 0 ? (
                                 <p style={styles.emptyCart}>No items in cart</p>
                             ) : (
-                                <ul style={styles.cartList}>
-                                    {cartItems.map((item, index) => (
-                                        <li key={index} style={styles.cartItem}>
-                                            <img src={item.imageUrl} alt={item.name} style={styles.cartItemImage} />
-                                            <div style={styles.cartItemDetails}>
-                                                <p style={styles.cartItemName}>{item.name}</p>
-                                                <p style={styles.cartItemPrice}>£{item.price.toFixed(2)} x {item.quantity}</p>
-                                            </div>
-                                            <button
-                                                style={styles.removeButton}
-                                                onClick={() => removeFromCart(item.id)}
-                                            >
-                                                <img
-                                                    src="/assets/images/x.svg"
-                                                    alt="Remove"
-                                                    style={styles.deleteIcon}
-                                                />
-                                            </button>
-                                        </li>
-                                    ))}
-                                </ul>
+                                <>
+                                    <ul style={styles.cartList}>
+                                        {cartItems.map((item, index) => (
+                                            <li key={index} style={styles.cartItem}>
+                                                <img src={item.imageUrl} alt={item.name} style={styles.cartItemImage} />
+                                                <div style={styles.cartItemDetails}>
+                                                    <p style={styles.cartItemName}>{item.name}</p>
+                                                    <p style={styles.cartItemPrice}>£{item.price.toFixed(2)} x {item.quantity}</p>
+                                                </div>
+                                                <button
+                                                    style={styles.removeButton}
+                                                    onClick={() => removeFromCart(item.id)}
+                                                >
+                                                    <img
+                                                        src="/assets/images/x.svg"
+                                                        alt="Remove"
+                                                        style={styles.deleteIcon}
+                                                    />
+                                                </button>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                    <div style={styles.cartActions}>
+                                        <button style={styles.viewCartButton}>View Cart</button>
+                                        <button
+                                            style={styles.checkoutButton}
+                                            onMouseEnter={(e) => {
+                                                e.currentTarget.style.backgroundColor = '#28a745';
+                                                e.currentTarget.style.color = '#fff';
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                e.currentTarget.style.backgroundColor = '#fff';
+                                                e.currentTarget.style.color = '#28a745';
+                                            }}
+                                        >
+                                            Checkout
+                                        </button>
+                                    </div>
+                                </>
                             )}
                         </div>
                     )}
@@ -203,6 +221,29 @@ const styles = {
     deleteIcon: {
         width: '16px',
         height: '16px',
+    },
+    cartActions: {
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: '1rem',
+    },
+    viewCartButton: {
+        backgroundColor: '#f0f0f0',
+        border: 'none',
+        padding: '0.5rem 1rem',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        transition: 'background-color 0.3s ease',
+        marginRight: '0.5rem', // Add margin to space out the buttons
+    },
+    checkoutButton: {
+        backgroundColor: '#fff',
+        color: '#28a745',
+        border: '2px solid #28a745',
+        padding: '0.5rem 1rem',
+        borderRadius: '4px',
+        cursor: 'pointer',
+        transition: 'background-color 0.3s ease, color 0.3s ease',
     },
 };
 
