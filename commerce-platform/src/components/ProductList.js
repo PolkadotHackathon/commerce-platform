@@ -60,7 +60,6 @@ const ProductList = () => {
                                     id={item.id}
                                     style={styles.addToTrolleyButton}
                                     onClick={() => addToCart(item)}
-                                    id={item.id}
                                 >
                                     <Image
                                         src="/assets/images/shopping-cart.svg"
