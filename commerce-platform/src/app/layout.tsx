@@ -6,6 +6,7 @@ import { CartProvider } from "@/contexts/CartContext";
 import CustomNavbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
 import CookieConsent from "../components/CookieConsent";
+import AccountSelectionModal from "../components/AccountSelectionModal";
 import React, { ReactNode, useEffect, useState } from "react";
 import CryptoJS from "crypto-js";
 import { ApiPromise, Keyring, WsProvider } from "@polkadot/api";
@@ -22,10 +23,10 @@ const Layout = ({ children }: LayoutProps) => {
   const [api, setApi] = useState<ApiPromise | null>(null);
   const [keyring, setKeyring] = useState<Keyring | null>(null);
   const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
-  const [selectedAccount, setSelectedAccount] =
-      useState<InjectedAccountWithMeta | null>(null);
+  const [selectedAccount, setSelectedAccount] = useState<InjectedAccountWithMeta | null>(null);
   const [showCookieConsent, setShowCookieConsent] = useState(true); // State for managing the cookie consent modal
   const [isLoadingWeb3, setIsLoadingWeb3] = useState(false);
+  const [showAccountSelection, setShowAccountSelection] = useState(false);
 
   const setup = async () => {
     const provider = new WsProvider("ws://localhost:9944");
@@ -48,17 +49,19 @@ const Layout = ({ children }: LayoutProps) => {
 
     if (allAccounts.length === 1) {
       setSelectedAccount(allAccounts[0]);
+    } else if (allAccounts.length > 1) {
+      setShowAccountSelection(true); // Show account selection modal if more than one account is available
     }
     setIsLoadingWeb3(false);
   };
 
-  const handleAccountSelection = async (e) => {
-    const address = e.target.value;
+  const handleAccountSelection = (address) => {
     const account = accounts.find((account) => account.address === address);
     if (!account) {
       throw new Error("Account not found");
     }
     setSelectedAccount(account);
+    setShowAccountSelection(false); // Hide the account selection modal
   };
 
   const handleAcceptCookies = () => {
@@ -86,9 +89,7 @@ const Layout = ({ children }: LayoutProps) => {
       const padded = id.padEnd(47, " ");
 
       if (padded.length !== 47) {
-        console.error(
-            "ID is more than 47 characters, unable to record telemetry."
-        );
+        console.error("ID is more than 47 characters, unable to record telemetry.");
         return;
       }
 
@@ -97,7 +98,7 @@ const Layout = ({ children }: LayoutProps) => {
       const encryptedBytes = CryptoJS.enc.Base64.parse(encrypted.toString());
       const encryptedArray = Array.from(encryptedBytes.words);
 
-      // Decrupt
+      // Decrypt
       // const bytes = CryptoJS.AES.decrypt(encrypted, SECRET_KEY);
       // const decrypted = bytes.toString(CryptoJS.enc.Utf8);
       // console.log('Decrypted:', decrypted);
@@ -133,9 +134,12 @@ const Layout = ({ children }: LayoutProps) => {
           </div>
           {isLoadingWeb3 && <div style={styles.blurBg}>Loading Web3...</div>}
           {showCookieConsent && (
-              <CookieConsent
-                  onAccept={handleAcceptCookies}
-                  onDecline={handleDeclineCookies}
+              <CookieConsent onAccept={handleAcceptCookies} onDecline={handleDeclineCookies} />
+          )}
+          {showAccountSelection && (
+              <AccountSelectionModal
+                  accounts={accounts}
+                  onSelectAccount={handleAccountSelection}
               />
           )}
           {/* Selected account picker */}
