@@ -21,6 +21,7 @@ const CookieConsent = ({ onAccept, onDecline }) => {
 
 const styles = {
     modal: {
+        fontFamily: "Arial, sans-serif",
         position: 'fixed',
         top: 0,
         left: 0,

@@ -71,9 +71,9 @@ const Layout = ({ children }: LayoutProps) => {
   };
 
   useEffect(() => {
-   setup();
+    setup();
   }, []);
-  
+
   useEffect(() => {
     const handlePress = (event: any) => {
       const target = event.target;
@@ -115,39 +115,35 @@ const Layout = ({ children }: LayoutProps) => {
   }, []); // Empty dependency array means this effect runs once on mount
 
   return (
-        <CategoryProvider>
-          <CartProvider>
-            <html lang="en">
-            <head>
-              <meta charSet="UTF-8" />
-              <meta
-                  name="viewport"
-                  content="width=device-width, initial-scale=1.0"
+      <CategoryProvider>
+        <CartProvider>
+          <html lang="en">
+          <head>
+            <meta charSet="UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+            <title>BuyBuy</title>
+          </head>
+          <body>
+          <div style={styles.container}>
+            <CustomNavbar />
+            <div style={styles.main}>
+              <Sidebar />
+              <div style={styles.content}>{children}</div>
+            </div>
+          </div>
+          {isLoadingWeb3 && <div style={styles.blurBg}>Loading Web3...</div>}
+          {showCookieConsent && (
+              <CookieConsent
+                  onAccept={handleAcceptCookies}
+                  onDecline={handleDeclineCookies}
               />
-              <title>BuyBuy</title>
-            </head>
-            <body>
-              <div style={styles.container}>
-                <CustomNavbar />
-                <div style={styles.main}>
-                  <Sidebar />
-                  <div style={styles.content}>{children}</div>
-                </div>
-              </div>
-              {/* Blur BG */}
-              {isLoadingWeb3 && <div>Loading Web3...</div>}
-              {showCookieConsent && (
-                  <CookieConsent
-                      onAccept={handleAcceptCookies}
-                      onDecline={handleDeclineCookies}
-                  />
-              )}
-              {/* Selected account picker */}
-              {selectedAccount == null && accounts.length > 1 && <></> }
-            </body>
-            </html>
-          </CartProvider>
-        </CategoryProvider>
+          )}
+          {/* Selected account picker */}
+          {selectedAccount == null && accounts.length > 1 && <></>}
+          </body>
+          </html>
+        </CartProvider>
+      </CategoryProvider>
   );
 };
 
@@ -173,6 +169,20 @@ const styles = {
     padding: "1rem",
     flex: 1,
     overflow: "hidden",
+  },
+  blurBg: {
+    fontFamily: "Arial, sans-serif",
+    position: "fixed",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    backdropFilter: "blur(10px)",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 1000,
   },
 };
 
