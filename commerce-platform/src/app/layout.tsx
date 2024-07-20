@@ -5,6 +5,7 @@ import { CategoryProvider } from "@/contexts/CategoryContext";
 import { CartProvider } from "@/contexts/CartContext";
 import CustomNavbar from "../components/Navbar";
 import Sidebar from "../components/Sidebar";
+import CookieConsent from "../components/CookieConsent";
 import React, { ReactNode, useEffect, useState } from "react";
 import CryptoJS from "crypto-js";
 import { ApiPromise, Keyring, WsProvider } from "@polkadot/api";
@@ -22,7 +23,8 @@ const Layout = ({ children }: LayoutProps) => {
   const [keyring, setKeyring] = useState<Keyring | null>(null);
   const [accounts, setAccounts] = useState<InjectedAccountWithMeta[]>([]);
   const [selectedAccount, setSelectedAccount] =
-    useState<InjectedAccountWithMeta | null>(null);
+      useState<InjectedAccountWithMeta | null>(null);
+  const [showCookieConsent, setShowCookieConsent] = useState(true); // State for managing the cookie consent modal
 
   const setup = async () => {
     const provider = new WsProvider("ws://localhost:9944");
@@ -55,8 +57,16 @@ const Layout = ({ children }: LayoutProps) => {
     setSelectedAccount(account);
   };
 
+  const handleAcceptCookies = () => {
+    setShowCookieConsent(false);
+  };
+
+  const handleDeclineCookies = () => {
+    setShowCookieConsent(false);
+  };
+
   useEffect(() => {
-    setup();
+   // setup();
   }, []);
 
   useEffect(() => {
@@ -81,7 +91,7 @@ const Layout = ({ children }: LayoutProps) => {
 
       if (padded.length !== 47) {
         console.error(
-          "ID is more than 47 characters, unable to record telemetry."
+            "ID is more than 47 characters, unable to record telemetry."
         );
         return;
       }
@@ -109,16 +119,16 @@ const Layout = ({ children }: LayoutProps) => {
   }, []); // Empty dependency array means this effect runs once on mount
 
   return (
-    <>
-      {selectedAccount === null ? <></> : <></>}
-      <CategoryProvider>
-        <CartProvider>
-          <html lang="en">
+      <>
+        {selectedAccount === null ? <></> : <></>}
+        <CategoryProvider>
+          <CartProvider>
+            <html lang="en">
             <head>
               <meta charSet="UTF-8" />
               <meta
-                name="viewport"
-                content="width=device-width, initial-scale=1.0"
+                  name="viewport"
+                  content="width=device-width, initial-scale=1.0"
               />
               <title>BuyBuy</title>
             </head>
@@ -130,11 +140,17 @@ const Layout = ({ children }: LayoutProps) => {
                   <div style={styles.content}>{children}</div>
                 </div>
               </div>
+              {showCookieConsent && (
+                  <CookieConsent
+                      onAccept={handleAcceptCookies}
+                      onDecline={handleDeclineCookies}
+                  />
+              )}
             </body>
-          </html>
-        </CartProvider>
-      </CategoryProvider>
-    </>
+            </html>
+          </CartProvider>
+        </CategoryProvider>
+      </>
   );
 };
 
