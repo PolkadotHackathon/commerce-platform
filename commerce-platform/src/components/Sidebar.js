@@ -9,11 +9,11 @@ const Sidebar = () => {
     const { selectedCategory, setSelectedCategory } = useCategory();
     const categories = [
         { name: 'Electronics', icon: '/assets/images/plug.svg' },
-        { name: 'Sports & Leisure', icon: '/assets/images/some-other-icon.svg' },
-        { name: 'Clothing', icon: '/assets/images/some-other-icon.svg' },
-        { name: 'Home & Furniture', icon: '/assets/images/some-other-icon.svg' },
-        { name: 'Health & Beauty', icon: '/assets/images/some-other-icon.svg' },
-        { name: 'Garden & DIY', icon: '/assets/images/some-other-icon.svg' },
+        { name: 'Sports & Leisure', icon: '/assets/images/dumbbell.svg' },
+        { name: 'Clothing', icon: '/assets/images/shirt.svg' },
+        { name: 'Home & Furniture', icon: '/assets/images/house.svg' },
+        { name: 'Health & Beauty', icon: '/assets/images/square-activity.svg' },
+        { name: 'Garden & DIY', icon: '/assets/images/flower-2.svg' },
     ];
 
     const [hoveredCategory, setHoveredCategory] = useState(null);
@@ -39,6 +39,11 @@ const Sidebar = () => {
                     </li>
                 ))}
             </ul>
+            <div style={styles.buttonContainer}>
+                <button style={styles.resetButton} onClick={() => setSelectedCategory('')}>
+                    Reset Filter
+                </button>
+            </div>
         </aside>
     );
 };
@@ -47,7 +52,11 @@ const styles = {
     sidebar: {
         padding: '1rem',
         backgroundColor: '#fff',
-        borderRight: '1px solid #e0e0e0'
+        borderRight: '1px solid #e0e0e0',
+        height: '100vh',
+        boxSizing: 'border-box',
+        position: 'sticky',
+        top: 0,
     },
     ul: {
         listStyleType: 'none',
@@ -72,6 +81,19 @@ const styles = {
         fontSize: '1rem',
         fontWeight: '500'
     },
+    buttonContainer: {
+        display: 'flex',
+        justifyContent: 'center',
+        marginTop: '1rem',
+    },
+    resetButton: {
+        padding: '0.5rem 1rem',
+        backgroundColor: ORANGE_COLOR,
+        border: 'none',
+        color: 'white',
+        cursor: 'pointer',
+        borderRadius: '5px',
+    }
 };
 
 export default Sidebar;

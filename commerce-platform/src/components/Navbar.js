@@ -1,21 +1,29 @@
+"use client";
+
 import React from 'react';
+import { useCart } from '@/contexts/CartContext';
 
 const Navbar = () => {
+    const { cartItems } = useCart();
+
     return (
         <nav style={styles.nav}>
             <div style={styles.brand}>
-                {/*<img src="/path/to/logo.png" alt="Ayapone" style={{ height: '40px' }} />*/}
                 <span style={styles.brandName}>BuyBuy</span>
             </div>
             <div style={styles.searchContainer}>
-                <img src="/assets/images/search.svg" alt="Search" style={styles.searchIcon} />
                 <input type="text" placeholder="Search" style={styles.searchInput} />
                 <button style={styles.searchButton}>Search</button>
             </div>
             <div style={styles.links}>
                 <a href="#" style={styles.link}>Account</a>
                 <a href="#" style={styles.link}>Support</a>
-                <img src="/assets/images/shopping-cart.svg" alt="Shopping Cart" style={styles.shoppingCart} />
+                <div style={styles.cartContainer}>
+                    <img src="/assets/images/shopping-cart.svg" alt="Cart" style={styles.cartIcon} />
+                    {cartItems.length > 0 && (
+                        <span style={styles.cartBadge}>{cartItems.length}</span>
+                    )}
+                </div>
             </div>
         </nav>
     );
@@ -46,11 +54,6 @@ const styles = {
         borderRadius: '5px',
         overflow: 'hidden',
     },
-    searchIcon: {
-        padding: '0 10px',
-        height: '16px',
-        width: '16px',
-    },
     searchInput: {
         padding: '0.5rem',
         border: 'none',
@@ -74,13 +77,23 @@ const styles = {
         color: '#000',
         fontWeight: '500',
     },
-    icon: {
-        fontSize: '24px',
+    cartContainer: {
+        position: 'relative',
     },
-    shoppingCart: {
-        height: '24px',
+    cartIcon: {
         width: '24px',
-    }
+        height: '24px',
+    },
+    cartBadge: {
+        position: 'absolute',
+        top: '-5px',
+        right: '-10px',
+        backgroundColor: 'red',
+        color: 'white',
+        borderRadius: '50%',
+        padding: '0.2rem 0.5rem',
+        fontSize: '0.8rem',
+    },
 };
 
 export default Navbar;
