@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { useCategory } from '@/contexts/CategoryContext';
 import { useCart } from '@/contexts/CartContext';
+import Image from 'next/image';
 
 const Navbar = () => {
     const { searchQuery, setSearchQuery } = useCategory();
@@ -36,14 +37,16 @@ const Navbar = () => {
                 <a href="#" style={styles.link}>Account</a>
                 <a href="#" style={styles.link}>Support</a>
                 <div style={styles.cartContainer}>
-                    <img
+                    <Image
                         src="/assets/images/shopping-cart.svg"
                         alt="Cart"
                         style={styles.cartIcon}
                         onClick={toggleCartSummary}
+                        width={24}
+                        height={24}
                     />
                     {cartItems.length > 0 && (
-                        <span style={styles.cartBadge}>{cartItems.length}</span>
+                        <span style={styles.cartBadge} className="cart-badge-pointer" onClick={toggleCartSummary}>{cartItems.reduce((sum, item) => sum + item.quantity, 0)}</span>
                     )}
                     {showCartSummary && (
                         <div style={styles.cartSummary}>
