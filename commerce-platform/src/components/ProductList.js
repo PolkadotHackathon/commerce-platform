@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { useCategory } from '@/contexts/CategoryContext';
 import fetchProducts from '../api/fetchProducts';
 
@@ -24,7 +25,12 @@ const ProductList = () => {
                 products.map((item) => (
                     <div key={item.id} style={styles.product}>
                         <div style={styles.imageContainer}>
-                            <img src={item.imageUrl} alt={item.name} style={styles.image} />
+                            <Image
+                                src={item.imageUrl}
+                                alt={item.name}
+                                layout="fill"
+                                objectFit="contain"
+                            />
                         </div>
                         <div style={styles.productDetails}>
                             <h4>{item.name}</h4>
@@ -56,9 +62,7 @@ const styles = {
         justifyContent: 'space-between',
     },
     imageContainer: {
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
+        position: 'relative',
         width: '100%',
         height: '200px',
         overflow: 'hidden'
