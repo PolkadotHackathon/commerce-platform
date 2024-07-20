@@ -58,6 +58,7 @@ const Layout = ({ children }: LayoutProps) => {
   };
 
   const handleAcceptCookies = () => {
+    handleConnection();
     setShowCookieConsent(false);
   };
 
@@ -66,7 +67,7 @@ const Layout = ({ children }: LayoutProps) => {
   };
 
   useEffect(() => {
-   // setup();
+   setup();
   }, []);
 
   useEffect(() => {
