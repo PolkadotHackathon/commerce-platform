@@ -31,7 +31,6 @@ const Navbar = () => {
                     value={searchQuery}
                     onChange={handleSearchChange}
                 />
-                <button style={styles.searchButton}>Search</button>
             </div>
             <div style={styles.links}>
                 <a href="#" style={styles.link}>Account</a>
@@ -57,7 +56,7 @@ const Navbar = () => {
                                             <img src={item.imageUrl} alt={item.name} style={styles.cartItemImage} />
                                             <div style={styles.cartItemDetails}>
                                                 <p style={styles.cartItemName}>{item.name}</p>
-                                                <p style={styles.cartItemPrice}>£{item.price.toFixed(2)}</p>
+                                                <p style={styles.cartItemPrice}>£{item.price.toFixed(2)} x {item.quantity}</p>
                                             </div>
                                         </li>
                                     ))}
@@ -101,13 +100,6 @@ const styles = {
         border: 'none',
         outline: 'none',
         width: '300px',
-    },
-    searchButton: {
-        padding: '0.5rem 1rem',
-        backgroundColor: '#ff6f00',
-        border: 'none',
-        color: 'white',
-        cursor: 'pointer',
     },
     searchIcon: {
         width: '16px',
