@@ -24,14 +24,14 @@ const Navbar = () => {
                 <span style={styles.brandName}>BuyBuy</span>
             </div>
             <div style={styles.searchContainer}>
+                <img src="/assets/images/search.svg" alt="Search" style={styles.searchIcon} />
                 <input
                     type="text"
-                    placeholder="Search"
+                    placeholder="Search..."
                     style={styles.searchInput}
                     value={searchQuery}
                     onChange={handleSearchChange}
                 />
-                <button style={styles.searchButton}>Search</button>
             </div>
             <div style={styles.links}>
                 <a href="#" style={styles.link}>Account</a>
@@ -132,12 +132,10 @@ const styles = {
         outline: 'none',
         width: '300px',
     },
-    searchButton: {
-        padding: '0.5rem 1rem',
-        backgroundColor: '#ff6f00',
-        border: 'none',
-        color: 'white',
-        cursor: 'pointer',
+    searchIcon: {
+        width: '16px',
+        height: '16px',
+        marginLeft: '10px',
     },
     links: {
         display: 'flex',

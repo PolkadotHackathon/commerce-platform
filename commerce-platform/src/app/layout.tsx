@@ -73,8 +73,7 @@ const Layout = ({ children }: LayoutProps) => {
   useEffect(() => {
    setup();
   }, []);
-
-  useEffect(() => {true
+  
   useEffect(() => {
     const handlePress = (event: any) => {
       const target = event.target;

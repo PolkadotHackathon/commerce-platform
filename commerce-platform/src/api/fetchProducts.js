@@ -2,7 +2,7 @@ import { collection, getDocs, query, where } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
 import { db, storage } from "@/api/firebase";
 
-const fetchProducts = async (selectedCategory, searchQuery) => {
+const fetchProducts = async (selectedCategory) => {
     let q;
     if (selectedCategory === 'All') {
         q = collection(db, "products");
