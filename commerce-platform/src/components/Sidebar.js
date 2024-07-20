@@ -1,45 +1,43 @@
-import React from 'react';
+"use client";
+
+import React, { useState } from 'react';
+import { useCategory } from '@/contexts/CategoryContext';
+
+const ORANGE_COLOR = '#ff6f00';
 
 const Sidebar = () => {
+    const { selectedCategory, setSelectedCategory } = useCategory();
+    const categories = [
+        { name: 'Electronics', icon: '/assets/images/plug.svg' },
+        { name: 'Sports & Leisure', icon: '/assets/images/some-other-icon.svg' },
+        { name: 'Clothing', icon: '/assets/images/some-other-icon.svg' },
+        { name: 'Home & Furniture', icon: '/assets/images/some-other-icon.svg' },
+        { name: 'Health & Beauty', icon: '/assets/images/some-other-icon.svg' },
+        { name: 'Garden & DIY', icon: '/assets/images/some-other-icon.svg' },
+    ];
+
+    const [hoveredCategory, setHoveredCategory] = useState(null);
+
     return (
         <aside style={styles.sidebar}>
             <h3>Categories</h3>
             <ul style={styles.ul}>
-                <li style={styles.li}>
-                    <img src="/assets/images/plug.svg" alt="Electronics" style={styles.icon} />
-                    <span style={styles.categoryName}>Electronics</span>
-                </li>
-                <li style={styles.li}>
-                    <img src="/assets/images/dumbbell.svg" alt="Sports & Leisure" style={styles.icon} />
-                    <span style={styles.categoryName}>Sports & Leisure</span>
-                </li>
-                <li style={styles.li}>
-                    <img src="/assets/images/shirt.svg" alt="Clothing" style={styles.icon} />
-                    <span style={styles.categoryName}>Clothing</span>
-                </li>
-                <li style={styles.li}>
-                    <img src="/assets/images/house.svg" alt="Home & Furniture" style={styles.icon} />
-                    <span style={styles.categoryName}>Home & Furniture</span>
-                </li>
-                <li style={styles.li}>
-                    <img src="/assets/images/square-activity.svg" alt="Health & Beauty" style={styles.icon} />
-                    <span style={styles.categoryName}>Health & Beauty</span>
-                </li>
-                <li style={styles.li}>
-                    <img src="/assets/images/flower-2.svg" alt="Garden & DIY" style={styles.icon} />
-                    <span style={styles.categoryName}>Garden & DIY</span>
-                </li>
-            </ul>
-            <h3>Brands</h3>
-            <ul style={styles.ul}>
-                <li style={styles.li}>
-                    <img src="/assets/images/apple.svg" alt="Apple" style={styles.icon} />
-                    <span style={styles.categoryName}>Apple</span>
-                </li>
-                <li style={styles.li}>
-                    <img src="/assets/images/xiaomi.svg" alt="Xiaomi" style={styles.icon} />
-                    <span style={styles.categoryName}>Xiaomi</span>
-                </li>
+                {categories.map((category) => (
+                    <li
+                        key={category.name}
+                        style={
+                            selectedCategory === category.name
+                                ? { ...styles.li, ...styles.liSelected }
+                                : styles.li
+                        }
+                        onClick={() => setSelectedCategory(category.name)}
+                        onMouseEnter={() => setHoveredCategory(category.name)}
+                        onMouseLeave={() => setHoveredCategory(null)}
+                    >
+                        <img src={category.icon} alt={category.name} style={styles.icon} />
+                        <span style={styles.categoryName}>{category.name}</span>
+                    </li>
+                ))}
             </ul>
         </aside>
     );
@@ -58,7 +56,12 @@ const styles = {
     li: {
         display: 'flex',
         alignItems: 'center',
-        padding: '0.5rem 0'
+        padding: '0.5rem 0',
+        cursor: 'pointer',
+        transition: 'color 0.3s',
+    },
+    liSelected: {
+        color: ORANGE_COLOR,
     },
     icon: {
         marginRight: '10px',
@@ -68,7 +71,7 @@ const styles = {
     categoryName: {
         fontSize: '1rem',
         fontWeight: '500'
-    }
+    },
 };
 
 export default Sidebar;
