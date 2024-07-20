@@ -41,7 +41,7 @@ const ProductList = () => {
     );
 
     return (
-        <div style={{ ...styles.productList, height: containerHeight }}>
+        <div style={{ ...styles.productList, height: containerHeight - 32 }}>
             {filteredItems.length === 0 ? (
                 <p>No products found</p>
             ) : (
