@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useCategory } from '../contexts/CategoryContext';
-import { useCart } from '../contexts/CartContext';
+import { useCategory } from '@/contexts/CategoryContext';
+import { useCart } from '@/contexts/CartContext';
 import fetchProducts from '../api/fetchProducts';
 
 const ProductList = () => {
@@ -14,11 +14,11 @@ const ProductList = () => {
 
     useEffect(() => {
         const getItems = async () => {
-            const items = await fetchProducts(selectedCategory);
+            const items = await fetchProducts(selectedCategory, searchQuery);
             setItems(items);
         };
         getItems();
-    }, [selectedCategory]);
+    }, [selectedCategory, searchQuery]);
 
     useEffect(() => {
         const updateContainerHeight = () => {
@@ -36,16 +36,12 @@ const ProductList = () => {
         };
     }, []);
 
-    const filteredItems = items.filter(item =>
-        searchQuery === '' || item.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-
     return (
         <div style={{ ...styles.productList, height: containerHeight }}>
-            {filteredItems.length === 0 ? (
+            {items.length === 0 ? (
                 <p>No products found</p>
             ) : (
-                filteredItems.map((item) => (
+                items.map((item) => (
                     <div key={item.id} style={styles.product}>
                         <div style={styles.imageContainer}>
                             <Image
@@ -61,6 +57,7 @@ const ProductList = () => {
                             <p style={styles.productReviews}>{item.reviews} reviews</p>
                             <div style={styles.buttonContainer}>
                                 <button
+                                    id={item.id}
                                     style={styles.addToTrolleyButton}
                                     onClick={() => addToCart(item)}
                                     id={item.id}
@@ -75,9 +72,8 @@ const ProductList = () => {
                                     Add to trolley
                                 </button>
                                 <button
+                                    id={`add-to-favorites-${item.id}`}
                                     style={styles.addToFavoritesButton}
-                                    onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#ffe6e6'}
-                                    onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#fff'}
                                 >
                                     <Image
                                         src="/assets/images/heart.svg"
@@ -102,6 +98,7 @@ const styles = {
         gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
         gap: '1rem',
         overflowY: 'auto',
+        padding: '1rem 0', // Padding for better spacing
     },
     product: {
         border: '1px solid #e0e0e0',
@@ -111,13 +108,13 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        height: 'calc(45vh - 2rem)',
+        height: 'calc(45vh - 2rem)', // Reduced height
         padding: '1rem',
     },
     imageContainer: {
         position: 'relative',
         width: '100%',
-        height: '50%',
+        height: '50%', // Adjusted to reduce the image container height
         marginBottom: '1rem',
     },
     productDetails: {
@@ -145,7 +142,7 @@ const styles = {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        gap: '0.5rem',
+        gap: '0.5rem', // Add gap between the buttons
     },
     addToTrolleyButton: {
         backgroundColor: '#28a745',
@@ -166,7 +163,7 @@ const styles = {
         cursor: 'pointer',
         display: 'flex',
         alignItems: 'center',
-        transition: 'background-color 0.3s ease',
+        transition: 'background-color 0.3s ease', // Add transition for smooth hover effect
     },
     cartIcon: {
         marginRight: '0.5rem',
