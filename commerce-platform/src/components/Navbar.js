@@ -6,7 +6,7 @@ import { useCart } from '@/contexts/CartContext';
 
 const Navbar = () => {
     const { searchQuery, setSearchQuery } = useCategory();
-    const { cartItems } = useCart();
+    const { cartItems, removeFromCart } = useCart();
     const [showCartSummary, setShowCartSummary] = useState(false);
 
     const handleSearchChange = (e) => {
@@ -23,7 +23,6 @@ const Navbar = () => {
                 <span style={styles.brandName}>BuyBuy</span>
             </div>
             <div style={styles.searchContainer}>
-                <img src="/assets/images/search.svg" alt="Search" style={styles.searchIcon} />
                 <input
                     type="text"
                     placeholder="Search"
@@ -31,6 +30,7 @@ const Navbar = () => {
                     value={searchQuery}
                     onChange={handleSearchChange}
                 />
+                <button style={styles.searchButton}>Search</button>
             </div>
             <div style={styles.links}>
                 <a href="#" style={styles.link}>Account</a>
@@ -58,6 +58,16 @@ const Navbar = () => {
                                                 <p style={styles.cartItemName}>{item.name}</p>
                                                 <p style={styles.cartItemPrice}>£{item.price.toFixed(2)} x {item.quantity}</p>
                                             </div>
+                                            <button
+                                                style={styles.removeButton}
+                                                onClick={() => removeFromCart(item.id)}
+                                            >
+                                                <img
+                                                    src="/assets/images/x.svg"
+                                                    alt="Remove"
+                                                    style={styles.deleteIcon}
+                                                />
+                                            </button>
                                         </li>
                                     ))}
                                 </ul>
@@ -101,10 +111,12 @@ const styles = {
         outline: 'none',
         width: '300px',
     },
-    searchIcon: {
-        width: '16px',
-        height: '16px',
-        marginLeft: '0.5rem',
+    searchButton: {
+        padding: '0.5rem 1rem',
+        backgroundColor: '#ff6f00',
+        border: 'none',
+        color: 'white',
+        cursor: 'pointer',
     },
     links: {
         display: 'flex',
@@ -171,6 +183,7 @@ const styles = {
     cartItemDetails: {
         display: 'flex',
         flexDirection: 'column',
+        flex: 1,
     },
     cartItemName: {
         fontSize: '0.9rem',
@@ -180,6 +193,16 @@ const styles = {
     cartItemPrice: {
         fontSize: '0.9rem',
         color: '#333',
+    },
+    removeButton: {
+        backgroundColor: 'transparent',
+        border: 'none',
+        cursor: 'pointer',
+        padding: 0,
+    },
+    deleteIcon: {
+        width: '16px',
+        height: '16px',
     },
 };
 

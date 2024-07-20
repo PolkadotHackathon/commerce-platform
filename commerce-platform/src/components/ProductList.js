@@ -71,7 +71,7 @@ const ProductList = () => {
                                     Add to trolley
                                 </button>
                                 <button
-                                    id={`add-to-favorites-${item.id}`} // Add unique ID to the button
+                                    id={`add-to-favorites-${item.id}`}
                                     style={styles.addToFavoritesButton}
                                 >
                                     <Image
