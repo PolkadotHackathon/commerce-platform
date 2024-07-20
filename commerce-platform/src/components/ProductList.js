@@ -57,10 +57,9 @@ const ProductList = () => {
                             <p style={styles.productReviews}>{item.reviews} reviews</p>
                             <div style={styles.buttonContainer}>
                                 <button
-                                    id={`add-to-trolley-${item.id}`} // Add unique ID to the button
+                                    id={`add-to-trolley-${item.id}`}
                                     style={styles.addToTrolleyButton}
                                     onClick={() => addToCart(item)}
-                                    id={`add-to-trolley-${item.id}`}
                                 >
                                     <Image
                                         src="/assets/images/shopping-cart.svg"
@@ -108,7 +107,7 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        height: 'calc(40vh - 2rem)', // Reduced height
+        height: 'calc(45vh - 2rem)', // Reduced height
         padding: '1rem',
     },
     imageContainer: {
