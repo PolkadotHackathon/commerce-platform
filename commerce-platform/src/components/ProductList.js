@@ -60,6 +60,7 @@ const ProductList = () => {
                                     id={`add-to-trolley-${item.id}`} // Add unique ID to the button
                                     style={styles.addToTrolleyButton}
                                     onClick={() => addToCart(item)}
+                                    id={`add-to-trolley-${item.id}`}
                                 >
                                     <Image
                                         src="/assets/images/shopping-cart.svg"
