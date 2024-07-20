@@ -37,15 +37,27 @@ const Layout = ({ children }: LayoutProps) => {
 };
 
 const styles = {
+    body: {
+        margin: 0,
+        padding: 0,
+        height: '100vh',
+        overflow: 'hidden',
+    },
     container: {
         fontFamily: 'Arial, sans-serif',
+        display: 'flex',
+        flexDirection: 'column',
+        height: '100vh',
     },
     main: {
         display: 'flex',
+        flex: 1,
+        overflow: 'hidden',
     },
     content: {
         padding: '1rem',
         flex: 1,
+        overflow: 'hidden',
     }
 };
 

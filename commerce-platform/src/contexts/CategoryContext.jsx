@@ -6,14 +6,21 @@ const CategoryContext = createContext();
 
 export const useCategory = () => {
     return useContext(CategoryContext);
-}
+};
 
 export const CategoryProvider = ({ children }) => {
-    const [selectedCategory, setSelectedCategory] = useState('');
+    const [selectedCategory, setSelectedCategory] = useState('All');
     const [searchQuery, setSearchQuery] = useState('');
 
+    const value = {
+        selectedCategory,
+        setSelectedCategory,
+        searchQuery,
+        setSearchQuery,
+    };
+
     return (
-        <CategoryContext.Provider value={{ selectedCategory, setSelectedCategory, searchQuery, setSearchQuery }}>
+        <CategoryContext.Provider value={value}>
             {children}
         </CategoryContext.Provider>
     );

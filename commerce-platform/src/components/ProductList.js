@@ -2,8 +2,8 @@
 
 import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
-import { useCategory } from '@/contexts/CategoryContext';
-import { useCart } from '@/contexts/CartContext';
+import { useCategory } from '../contexts/CategoryContext';
+import { useCart } from '../contexts/CartContext';
 import fetchProducts from '../api/fetchProducts';
 
 const ProductList = () => {
@@ -37,7 +37,7 @@ const ProductList = () => {
     }, []);
 
     const filteredItems = items.filter(item =>
-        item.name.toLowerCase().includes(searchQuery.toLowerCase())
+        searchQuery === '' || item.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
 
     return (
