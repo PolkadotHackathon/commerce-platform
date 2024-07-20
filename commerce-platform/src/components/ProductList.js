@@ -1,15 +1,19 @@
 "use client";
 
 import React, { useEffect, useState } from 'react';
-import fetchItems from '../api/fetchProducts';
+import fetchProducts from '../api/fetchProducts';
 
 const ProductList = () => {
     const [items, setItems] = useState([]);
 
     useEffect(() => {
         const getItems = async () => {
-            const items = await fetchItems();
-            setItems(items);
+            try {
+                const items = await fetchProducts();
+                setItems(items);
+            } catch (error) {
+                console.error('Failed to fetch items:', error);
+            }
         };
         getItems();
     }, []);
@@ -21,9 +25,9 @@ const ProductList = () => {
             ) : (
                 items.map((item) => (
                     <div key={item.id} style={styles.product}>
-                        <img src={item.image} alt={item.name} style={styles.image} />
+                        <img src={item.imageUrl} alt={item.name} style={styles.image} />
                         <p><strong>{item.name}</strong></p>
-                        <p>${item.price} {item.currency}</p>
+                        <p>${item.price}</p>
                         <p>{item.reviews} reviews</p>
                     </div>
                 ))

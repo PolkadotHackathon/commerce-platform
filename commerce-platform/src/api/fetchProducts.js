@@ -1,14 +1,27 @@
-// src/fetchItems.js
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "./firebase";
+import { ref, getDownloadURL } from "firebase/storage";
+import { db, storage } from "@/api/firebase";
 
-const fetchItems = async () => {
+const fetchProducts = async () => {
     const querySnapshot = await getDocs(collection(db, "products"));
     const items = [];
-    querySnapshot.forEach((doc) => {
-        items.push({ id: doc.id, ...doc.data() });
-    });
+
+    for (const doc of querySnapshot.docs) {
+        const data = doc.data();
+        if (typeof data.images === 'string') {
+            const imageRef = ref(storage, data.images);
+            try {
+                const imageUrl = await getDownloadURL(imageRef);
+                items.push({ id: doc.id, ...data, imageUrl });
+            } catch (error) {
+                console.error('Error fetching image URL:', error);
+            }
+        } else {
+            console.error('Invalid image path:', data.images);
+        }
+    }
+
     return items;
 };
 
-export default fetchItems;
+export default fetchProducts;

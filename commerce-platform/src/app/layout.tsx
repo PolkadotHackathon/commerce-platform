@@ -1,8 +1,14 @@
 import './globals.css';
 import Navbar from '../components/Navbar';
 import Sidebar from '../components/Sidebar';
+import React, { ReactNode } from 'react';
 
-const Layout = ({ children }) => {
+interface LayoutProps {
+    children: ReactNode;
+}
+
+
+const Layout = ({ children }: LayoutProps) => {
     return (
         <html lang="en">
         <head>
