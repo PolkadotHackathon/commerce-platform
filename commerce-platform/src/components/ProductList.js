@@ -1,33 +1,33 @@
-const products = [
-    {
-        name: "Oraimo Freepods 3",
-        price: "26.49",
-        reviews: 134,
-        rating: 4.5,
-        currency: "USD",
-        image: "/images/oraimo-freepods-3.jpg"
-    },
-    {
-        name: "Apple Airpods Pro",
-        price: "222.51",
-        reviews: 12,
-        rating: 4.8,
-        currency: "USD",
-        image: "/images/apple-airpods-pro.jpg"
-    }
-];
+"use client";
+
+import React, { useEffect, useState } from 'react';
+import fetchItems from '../api/fetchProducts';
 
 const ProductList = () => {
+    const [items, setItems] = useState([]);
+
+    useEffect(() => {
+        const getItems = async () => {
+            const items = await fetchItems();
+            setItems(items);
+        };
+        getItems();
+    }, []);
+
     return (
         <div style={styles.productList}>
-            {products.map((product, index) => (
-                <div key={index} style={styles.product}>
-                    <img src={product.image} alt={product.name} style={styles.image} />
-                    <h4>{product.name}</h4>
-                    <p>${product.price} {product.currency}</p>
-                    <p>{product.reviews} reviews</p>
-                </div>
-            ))}
+            {items.length === 0 ? (
+                <p>Loading...</p>
+            ) : (
+                items.map((item) => (
+                    <div key={item.id} style={styles.product}>
+                        <img src={item.image} alt={item.name} style={styles.image} />
+                        <p><strong>{item.name}</strong></p>
+                        <p>${item.price} {item.currency}</p>
+                        <p>{item.reviews} reviews</p>
+                    </div>
+                ))
+            )}
         </div>
     );
 };
@@ -44,11 +44,13 @@ const styles = {
         padding: '1rem',
         borderRadius: '8px',
         textAlign: 'center',
-        width: 'calc(33.333% - 2rem)'
+        width: 'calc(33.333% - 2rem)',
+        backgroundColor: '#fff',
     },
     image: {
         width: '100%',
-        height: 'auto'
+        height: 'auto',
+        marginBottom: '1rem'
     }
 };
 
