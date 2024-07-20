@@ -25,6 +25,7 @@ const Layout = ({ children }: LayoutProps) => {
   const [selectedAccount, setSelectedAccount] =
       useState<InjectedAccountWithMeta | null>(null);
   const [showCookieConsent, setShowCookieConsent] = useState(true); // State for managing the cookie consent modal
+  const [isLoadingWeb3, setIsLoadingWeb3] = useState(false);
 
   const setup = async () => {
     const provider = new WsProvider("ws://localhost:9944");
@@ -34,9 +35,11 @@ const Layout = ({ children }: LayoutProps) => {
   };
 
   const handleConnection = async () => {
+    setIsLoadingWeb3(true);
     const extensions = await web3Enable(NAME);
 
     if (!extensions.length) {
+      setIsLoadingWeb3(false);
       throw new Error("No extension found");
     }
 
@@ -46,6 +49,7 @@ const Layout = ({ children }: LayoutProps) => {
     if (allAccounts.length === 1) {
       setSelectedAccount(allAccounts[0]);
     }
+    setIsLoadingWeb3(false);
   };
 
   const handleAccountSelection = async (e) => {
@@ -70,15 +74,7 @@ const Layout = ({ children }: LayoutProps) => {
    setup();
   }, []);
 
-  useEffect(() => {
-    if (!api) return;
-
-    (async () => {
-      const time = await api.query.timestamp.now();
-      console.log(time.toPrimitive());
-    })();
-  }, [api]);
-
+  useEffect(() => {true
   useEffect(() => {
     const handlePress = (event: any) => {
       const target = event.target;
@@ -120,8 +116,6 @@ const Layout = ({ children }: LayoutProps) => {
   }, []); // Empty dependency array means this effect runs once on mount
 
   return (
-      <>
-        {selectedAccount === null ? <></> : <></>}
         <CategoryProvider>
           <CartProvider>
             <html lang="en">
@@ -141,17 +135,20 @@ const Layout = ({ children }: LayoutProps) => {
                   <div style={styles.content}>{children}</div>
                 </div>
               </div>
+              {/* Blur BG */}
+              {isLoadingWeb3 && <div>Loading Web3...</div>}
               {showCookieConsent && (
                   <CookieConsent
                       onAccept={handleAcceptCookies}
                       onDecline={handleDeclineCookies}
                   />
               )}
+              {/* Selected account picker */}
+              {selectedAccount == null && accounts.length > 1 && <></> }
             </body>
             </html>
           </CartProvider>
         </CategoryProvider>
-      </>
   );
 };
 
