@@ -10,7 +10,6 @@ import AccountSelectionModal from "../components/AccountSelectionModal";
 import React, { ReactNode, useEffect, useState } from "react";
 import CryptoJS from "crypto-js";
 import { ApiPromise, Keyring, WsProvider } from "@polkadot/api";
-import { web3Accounts, web3Enable } from "@polkadot/extension-dapp";
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
 
 interface LayoutProps {
@@ -38,6 +37,10 @@ const Layout = ({ children }: LayoutProps) => {
   };
 
   const handleConnection = async () => {
+    const { web3Accounts, web3Enable } = await import(
+      "@polkadot/extension-dapp"
+    );
+    
     setIsLoadingWeb3(true);
     const extensions = await web3Enable(NAME);
 
