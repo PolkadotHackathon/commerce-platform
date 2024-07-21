@@ -1,16 +1,14 @@
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { ref, getDownloadURL } from "firebase/storage";
-import { db, storage } from "@/api/firebase";
+import { db, storage } from "./firebase";
 
 const fetchProducts = async (selectedCategory) => {
     let q;
-    if (selectedCategory === 'All') {
-        q = collection(db, "products");
+
+    if (selectedCategory && selectedCategory !== "All") {
+        q = query(collection(db, "products"), where("category", "==", selectedCategory));
     } else {
-        q = query(
-            collection(db, "products"),
-            where("category", "==", selectedCategory)
-        );
+        q = query(collection(db, "products"));
     }
 
     const querySnapshot = await getDocs(q);
