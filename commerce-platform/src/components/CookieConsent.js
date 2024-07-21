@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
-const { ApiPromise, WsProvider } = require('@polkadot/api');
+"use client";
+
+import React from 'react';
 
 const CookieConsent = ({ onAccept, onDecline }) => {
     return (
