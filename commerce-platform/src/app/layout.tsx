@@ -32,11 +32,10 @@ const Layout = ({ children }: LayoutProps) => {
     const setup = async () => {
         // WARNING: ENSURE CORRECT ENDPOINT IS USED
         // const provider = new WsProvider("ws://localhost:9944");
-        const provider = new WsProvider("wss://wet-games-sneeze.loca.lt");
+        const provider = new WsProvider("wss://full-rockets-enter.loca.lt");
         const api: ApiPromise = await ApiPromise.create({ provider });
         setApi(api);
         setKeyring(new Keyring({ type: "sr25519" }));
-
     };
 
     const handleConnection = async () => {
