@@ -31,7 +31,7 @@ const Layout = ({ children }: LayoutProps) => {
 
     const setup = async () => {
         // const provider = new WsProvider("ws://localhost:9944");
-        const provider = new WsProvider("ws://short-sheep-sniff.loca.lt");
+        const provider = new WsProvider("wss://short-sheep-sniff.loca.lt");
         const api: ApiPromise = await ApiPromise.create({ provider });
         setApi(api);
         setKeyring(new Keyring({ type: "sr25519" }));
