@@ -160,7 +160,7 @@ const Layout = ({ children }: LayoutProps) => {
                 //         }
                 //     });
 
-                const unsub = await api.tx.dbModule.registerWebsite([0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]).
+                const unsub = await api.tx.dbModule.registerWebsite(3).
                     send(({ events = [], status }) => {
                         console.log('Transaction status:', status.type);
                     }
