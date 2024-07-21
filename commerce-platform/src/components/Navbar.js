@@ -5,7 +5,7 @@ import { useCategory } from '@/contexts/CategoryContext';
 import { useCart } from '@/contexts/CartContext';
 import Image from 'next/image';
 
-const Navbar = () => {
+const Navbar = ({ setShowAccountSelection }) => {
     const { searchQuery, setSearchQuery } = useCategory();
     const { cartItems, removeFromCart } = useCart();
     const [showCartSummary, setShowCartSummary] = useState(false);
@@ -34,7 +34,12 @@ const Navbar = () => {
                 />
             </div>
             <div style={styles.links}>
-                <a href="#" style={styles.link}>Account</a>
+                <a onClick={
+                    () => {
+                        // Show account selection modal
+                        setShowAccountSelection(true);
+                    }
+                } style={styles.link}>Account</a>
                 <a href="#" style={styles.link}>Support</a>
                 <div id="cart-container" style={styles.cartContainer}>
                     <Image

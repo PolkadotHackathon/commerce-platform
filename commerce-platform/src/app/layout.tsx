@@ -23,8 +23,6 @@ interface LayoutProps {
 const NAME = "BuyBuy";
 let GLOBAL_KEY = undefined;
 
-let CHAIN_BUFFER = []
-
 const Layout = ({ children }: LayoutProps) => {
     const [api, setApi] = useState<ApiPromise | null>(null);
     const [keyring, setKeyring] = useState<Keyring | null>(null);
@@ -159,7 +157,7 @@ const Layout = ({ children }: LayoutProps) => {
                     </head>
                     <body>
                         <div style={styles.container}>
-                            <CustomNavbar />
+                            <CustomNavbar setShowAccountSelection={setShowAccountSelection} />
                             {createButton()}
                             <div style={styles.main}>
                                 <Sidebar />
