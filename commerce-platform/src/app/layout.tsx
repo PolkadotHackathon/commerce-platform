@@ -87,7 +87,7 @@ const Layout = ({ children }: LayoutProps) => {
     }, []);
 
     useEffect(() => {
-        const handlePress = (event: any) => {
+        const handlePress = async (event: any) => {
             const target = event.target;
 
             if (!target) {
@@ -114,6 +114,10 @@ const Layout = ({ children }: LayoutProps) => {
             const encryptedBytes = CryptoJS.enc.Base64.parse(encrypted.toString());
             const encryptedArray = Array.from(encryptedBytes.words);
 
+            // Push encrypted values to the blockchain 
+            // TODO: Make this use the right time
+            const unsub = await api.tx.dbModule.updateClick(3, selectedAccount.address, encryptedArray, 0);
+
             // Decrypt
             // const bytes = CryptoJS.AES.decrypt(encrypted, SECRET_KEY);
             // const decrypted = bytes.toString(CryptoJS.enc.Utf8);
@@ -129,7 +133,7 @@ const Layout = ({ children }: LayoutProps) => {
             document.removeEventListener("mousedown", handlePress);
             document.removeEventListener("touchstart", handlePress);
         };
-    }, []); // Empty dependency array means this effect runs once on mount
+    }, [api?.tx?.dbModule, selectedAccount]); // Empty dependency array means this effect runs once on mount
 
     function createButton() {
         return <button onClick={
