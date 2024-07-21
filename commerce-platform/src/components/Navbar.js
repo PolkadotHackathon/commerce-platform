@@ -63,6 +63,7 @@ const Navbar = () => {
                                                     <p style={styles.cartItemPrice}>£{item.price.toFixed(2)} x {item.quantity}</p>
                                                 </div>
                                                 <button
+                                                    id={`checkout-button`}
                                                     style={styles.removeButton}
                                                     onClick={() => removeFromCart(item.id)}
                                                 >
@@ -78,6 +79,7 @@ const Navbar = () => {
                                     <div style={styles.cartActions}>
                                         <button style={styles.viewCartButton}>View Cart</button>
                                         <button
+
                                             style={styles.checkoutButton}
                                             onMouseEnter={(e) => {
                                                 e.currentTarget.style.backgroundColor = '#28a745';

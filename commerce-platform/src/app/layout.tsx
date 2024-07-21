@@ -20,7 +20,7 @@ interface LayoutProps {
     children: ReactNode;
 }
 
-// const NAME = "BuyBuy";
+const NAME = "BuyBuy";
 let GLOBAL_KEY = undefined;
 
 const Layout = ({ children }: LayoutProps) => {
@@ -41,7 +41,7 @@ const Layout = ({ children }: LayoutProps) => {
 
     const handleConnection = async () => {
         setIsLoadingWeb3(true);
-        const extensions = await web3Enable("BuyBuy");
+        const extensions = await web3Enable(NAME);
 
         if (!extensions.length) {
             setIsLoadingWeb3(false);
@@ -58,7 +58,7 @@ const Layout = ({ children }: LayoutProps) => {
         }
         setIsLoadingWeb3(false);
 
-        // Get the gobal key from teh config
+        // Get the global key from the config
         let key = await api.consts.dbModule.globalKey;
         GLOBAL_KEY = key.toString();
         console.log("GLOBAL_KEY", GLOBAL_KEY);
@@ -89,17 +89,12 @@ const Layout = ({ children }: LayoutProps) => {
     useEffect(() => {
         const handlePress = (event: any) => {
             const target = event.target;
-
-            if (!target) {
-                console.log("Target is null");
-                return;
-            }
+            if (!target) return;
 
             const id = target.id;
-            if (!id) {
-                console.log("ID is null");
-                return;
-            }
+            if (!id) return;
+
+            console.log("ID:", id);  // Debugging line to ensure ID is being captured correctly
 
             // Pad string to 64 bytes
             const padded = id.padEnd(47, " ");
@@ -109,15 +104,21 @@ const Layout = ({ children }: LayoutProps) => {
                 return;
             }
 
-            // Encrypt
-            const encrypted = CryptoJS.AES.encrypt(padded, GLOBAL_KEY);
-            const encryptedBytes = CryptoJS.enc.Base64.parse(encrypted.toString());
-            const encryptedArray = Array.from(encryptedBytes.words);
+            try {
+                // Encrypt
+                const encrypted = CryptoJS.AES.encrypt(padded, NAME);
+                const encryptedBytes = CryptoJS.enc.Base64.parse(encrypted.toString());
+                const encryptedArray = Array.from(encryptedBytes.words);
 
-            // Decrypt
-            // const bytes = CryptoJS.AES.decrypt(encrypted, SECRET_KEY);
-            // const decrypted = bytes.toString(CryptoJS.enc.Utf8);
-            // console.log('Decrypted:', decrypted);
+                console.log("Encrypted Array:", encryptedArray);  // Debugging line to ensure encryption is working
+
+                // Decrypt
+                // const bytes = CryptoJS.AES.decrypt(encrypted, SECRET_KEY);
+                // const decrypted = bytes.toString(CryptoJS.enc.Utf8);
+                // console.log('Decrypted:', decrypted);
+            } catch (error) {
+                console.error("Encryption error:", error);  // Log the error
+            }
         };
 
         // Add event listeners
@@ -134,45 +135,10 @@ const Layout = ({ children }: LayoutProps) => {
     function createButton() {
         return <button onClick={
             async () => {
-
-                // const { data: balance } = await api.query.system.account(selectedAccount.address);
-                // console.log("Balance", balance.free.toHuman());
-                //
-                // const existentialDeposit = await api.consts.balances.existentialDeposit;
-                // console.log("Existential Deposit", existentialDeposit.toHuman());
-                //
-                // console.log("API.TX", api.tx.dbModule.registerWebsite);
-                // console.log("Selected Account", selectedAccount);
-
-                // Get the signer
-                // const injector = await web3FromAddress(selectedAccount.address);
-
-                // Set the signer
-                // api.setSigner(injector.signer);
-
-                // const unsub = await api.tx.dbModule.registerWebsite([0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
-                //     .signAndSend(selectedAccount.address, { signer: injector.signer }, ({ events = [], status }) => {
-                //         console.log('Transaction status:', status.type);
-                //
-                //         if (status.isInBlock) {
-                //             console.log('Included at block hash', status.asInBlock.toHex());
-                //             console.log('Events:');
-                //
-                //             events.forEach(({ phase, event: { data, method, section } }) => {
-                //                 console.log('\t', phase.toString(), `: ${section}.${method}`, data.toString());
-                //             });
-                //         } else if (status.isFinalized) {
-                //             console.log('Finalized block hash', status.asFinalized.toHex());
-                //             unsub();
-                //         }
-                //     });
-
-                const unsub = await api.tx.dbModule.registerWebsite(3).
-                    send(({ events = [], status }) => {
+                const unsub = await api.tx.dbModule.registerWebsite(3)
+                    .send(({ events = [], status }) => {
                         console.log('Transaction status:', status.type);
-                    }
-                    );
-
+                    });
             }}>Query the Blockchain</button>;
     }
 
@@ -180,33 +146,33 @@ const Layout = ({ children }: LayoutProps) => {
         <CategoryProvider>
             <CartProvider>
                 <html lang="en">
-                    <head>
-                        <meta charSet="UTF-8" />
-                        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                        <title>BuyBuy</title>
-                    </head>
-                    <body>
-                        <div style={styles.container}>
-                            <CustomNavbar />
-                            {createButton()}
-                            <div style={styles.main}>
-                                <Sidebar />
-                                <div style={styles.content}>{children}</div>
-                            </div>
-                        </div>
-                        {isLoadingWeb3 && <div style={styles.blurBg}>Loading Web3...</div>}
-                        {showCookieConsent && (
-                            <CookieConsent onAccept={handleAcceptCookies} onDecline={handleDeclineCookies} />
-                        )}
-                        {showAccountSelection && (
-                            <AccountSelectionModal
-                                accounts={accounts}
-                                onSelectAccount={handleAccountSelection}
-                            />
-                        )}
-                        {/* Selected account picker */}
-                        {selectedAccount == null && accounts.length > 1 && <></>}
-                    </body>
+                <head>
+                    <meta charSet="UTF-8" />
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+                    <title>BuyBuy</title>
+                </head>
+                <body>
+                <div style={styles.container}>
+                    <CustomNavbar />
+                    {createButton()}
+                    <div style={styles.main}>
+                        <Sidebar />
+                        <div style={styles.content}>{children}</div>
+                    </div>
+                </div>
+                {isLoadingWeb3 && <div style={styles.blurBg}>Loading Web3...</div>}
+                {showCookieConsent && (
+                    <CookieConsent onAccept={handleAcceptCookies} onDecline={handleDeclineCookies} />
+                )}
+                {showAccountSelection && (
+                    <AccountSelectionModal
+                        accounts={accounts}
+                        onSelectAccount={handleAccountSelection}
+                    />
+                )}
+                {/* Selected account picker */}
+                {selectedAccount == null && accounts.length > 1 && <></>}
+                </body>
                 </html>
             </CartProvider>
         </CategoryProvider>
