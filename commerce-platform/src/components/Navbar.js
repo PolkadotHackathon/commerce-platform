@@ -33,10 +33,10 @@ const Navbar = () => {
                     onChange={handleSearchChange}
                 />
             </div>
-            <div style={styles.links} id="test_id">
+            <div style={styles.links}>
                 <a href="#" style={styles.link}>Account</a>
                 <a href="#" style={styles.link}>Support</a>
-                <div id="test_id" style={styles.cartContainer}>
+                <div id="cart-container" style={styles.cartContainer}>
                     <Image
                         src="/assets/images/shopping-cart.svg"
                         alt="Cart"
@@ -46,7 +46,7 @@ const Navbar = () => {
                         height={24}
                     />
                     {cartItems.length > 0 && (
-                        <span id="test_id" style={styles.cartBadge} className="cart-badge-pointer" onClick={toggleCartSummary}>{cartItems.reduce((sum, item) => sum + item.quantity, 0)}</span>
+                        <span id="cart-badge" style={styles.cartBadge} className="cart-badge-pointer" onClick={toggleCartSummary}>{cartItems.reduce((sum, item) => sum + item.quantity, 0)}</span>
                     )}
                     {showCartSummary && (
                         <div style={styles.cartSummary}>
@@ -63,11 +63,12 @@ const Navbar = () => {
                                                     <p style={styles.cartItemPrice}>£{item.price.toFixed(2)} x {item.quantity}</p>
                                                 </div>
                                                 <button
-                                                    id={`checkout-button`}
+
                                                     style={styles.removeButton}
                                                     onClick={() => removeFromCart(item.id)}
                                                 >
                                                     <img
+                                                        id={`remove-${item.id}`}
                                                         src="/assets/images/x.svg"
                                                         alt="Remove"
                                                         style={styles.deleteIcon}
@@ -77,9 +78,9 @@ const Navbar = () => {
                                         ))}
                                     </ul>
                                     <div style={styles.cartActions}>
-                                        <button style={styles.viewCartButton}>View Cart</button>
+                                        <button id="view-cart-button" style={styles.viewCartButton}>View Cart</button>
                                         <button
-
+                                            id="checkout-button"
                                             style={styles.checkoutButton}
                                             onMouseEnter={(e) => {
                                                 e.currentTarget.style.backgroundColor = '#28a745';

@@ -46,7 +46,11 @@ const ProductList = () => {
                 <p>No products found</p>
             ) : (
                 filteredItems.map((item) => (
-                    <div key={item.id} style={styles.product}>
+                    <div
+                        key={item.id}
+                        id={`product-${item.id}`}
+                        style={styles.product}
+                    >
                         <div style={styles.imageContainer}>
                             <Image
                                 src={item.imageUrl}
@@ -75,7 +79,7 @@ const ProductList = () => {
                                     Add to trolley
                                 </button>
                                 <button
-                                    id={`add-to-favorites-${item.id}`}  // Unique ID for the add to favorites button
+                                    id={`add-to-favorites-${item.id}`}
                                     style={styles.addToFavoritesButton}
                                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#ffe6e6'}
                                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#fff'}
@@ -113,13 +117,14 @@ const styles = {
         display: 'flex',
         flexDirection: 'column',
         justifyContent: 'space-between',
-        height: 'calc(45vh - 2rem)',
+        height: 'calc(45vh - 2rem)', // Reduced height
         padding: '1rem',
+        cursor: 'pointer',
     },
     imageContainer: {
         position: 'relative',
         width: '100%',
-        height: '50%',
+        height: '50%', // Adjusted to reduce the image container height
         marginBottom: '1rem',
     },
     productDetails: {
@@ -147,7 +152,7 @@ const styles = {
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center',
-        gap: '0.5rem',
+        gap: '0.5rem', // Add gap between the buttons
     },
     addToTrolleyButton: {
         backgroundColor: '#28a745',
@@ -168,7 +173,7 @@ const styles = {
         cursor: 'pointer',
         display: 'flex',
         alignItems: 'center',
-        transition: 'background-color 0.3s ease',
+        transition: 'background-color 0.3s ease', // Add transition for smooth hover effect
     },
     cartIcon: {
         marginRight: '0.5rem',
