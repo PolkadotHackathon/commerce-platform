@@ -111,14 +111,12 @@ const Layout = ({ children }: LayoutProps) => {
                 const encrypted = CryptoJS.AES.encrypt(padded, NAME);
                 const encryptedBytes = CryptoJS.enc.Base64.parse(encrypted.toString());
                 const encryptedArray = Array.from(encryptedBytes.words);
+                console.log("Encrypted Array:", encryptedArray);  // Debugging line to ensure encryption is working
 
                 // Push encrypted values to the blockchain 
                 const unsub = await api.tx.dbModule.updateClick(3, selectedAccount.address, encryptedArray, Date.now());
-
                 unsub.send();
                 console.log("Unsub:", unsub);  // Debugging line to ensure the unsub is working
-
-                console.log("Encrypted Array:", encryptedArray);  // Debugging line to ensure encryption is working
 
                 // Decrypt
                 // const bytes = CryptoJS.AES.decrypt(encrypted, SECRET_KEY);
