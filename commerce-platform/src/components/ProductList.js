@@ -61,6 +61,7 @@ const ProductList = () => {
                             <p style={styles.productReviews}>{item.reviews} reviews</p>
                             <div style={styles.buttonContainer}>
                                 <button
+                                    id={`add-to-cart-${item.id}`}  // Unique ID for the add to cart button
                                     style={styles.addToTrolleyButton}
                                     onClick={() => addToCart(item)}
                                 >
@@ -74,6 +75,7 @@ const ProductList = () => {
                                     Add to trolley
                                 </button>
                                 <button
+                                    id={`add-to-favorites-${item.id}`}  // Unique ID for the add to favorites button
                                     style={styles.addToFavoritesButton}
                                     onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#ffe6e6'}
                                     onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#fff'}
@@ -101,6 +103,7 @@ const styles = {
         gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))',
         gap: '1rem',
         overflowY: 'auto',
+        padding: '1rem 0', // Padding for better spacing
     },
     product: {
         border: '1px solid #e0e0e0',

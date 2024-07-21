@@ -114,8 +114,6 @@ const Layout = ({ children }: LayoutProps) => {
             const encryptedBytes = CryptoJS.enc.Base64.parse(encrypted.toString());
             const encryptedArray = Array.from(encryptedBytes.words);
 
-            console.log("Encrypted Array", encryptedArray);
-
             // Decrypt
             // const bytes = CryptoJS.AES.decrypt(encrypted, SECRET_KEY);
             // const decrypted = bytes.toString(CryptoJS.enc.Utf8);
