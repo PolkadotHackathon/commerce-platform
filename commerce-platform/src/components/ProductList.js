@@ -47,8 +47,8 @@ const ProductList = () => {
             ) : (
                 filteredItems.map((item) => (
                     <div
-                        key={item.id}
                         id={`product-${item.id}`}
+                        key={item.id}
                         style={styles.product}
                     >
                         <div style={styles.imageContainer}>
