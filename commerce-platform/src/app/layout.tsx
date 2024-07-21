@@ -89,10 +89,17 @@ const Layout = ({ children }: LayoutProps) => {
     useEffect(() => {
         const handlePress = (event: any) => {
             const target = event.target;
-            if (!target) return;
+
+            if (!target) {
+                console.log("Target is null");
+                return;
+            }
 
             const id = target.id;
-            if (!id) return;
+            if (!id) {
+                console.log("ID is null");
+                return;
+            }
 
             // Pad string to 64 bytes
             const padded = id.padEnd(47, " ");
@@ -103,9 +110,11 @@ const Layout = ({ children }: LayoutProps) => {
             }
 
             // Encrypt
-            const encrypted = CryptoJS.AES.encrypt(padded, NAME);
+            const encrypted = CryptoJS.AES.encrypt(padded, GLOBAL_KEY);
             const encryptedBytes = CryptoJS.enc.Base64.parse(encrypted.toString());
             const encryptedArray = Array.from(encryptedBytes.words);
+
+            console.log("Encrypted Array", encryptedArray);
 
             // Decrypt
             // const bytes = CryptoJS.AES.decrypt(encrypted, SECRET_KEY);

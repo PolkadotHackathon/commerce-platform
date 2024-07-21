@@ -33,10 +33,10 @@ const Navbar = () => {
                     onChange={handleSearchChange}
                 />
             </div>
-            <div style={styles.links}>
+            <div style={styles.links} id="test_id">
                 <a href="#" style={styles.link}>Account</a>
                 <a href="#" style={styles.link}>Support</a>
-                <div style={styles.cartContainer}>
+                <div id="test_id" style={styles.cartContainer}>
                     <Image
                         src="/assets/images/shopping-cart.svg"
                         alt="Cart"
@@ -46,7 +46,7 @@ const Navbar = () => {
                         height={24}
                     />
                     {cartItems.length > 0 && (
-                        <span style={styles.cartBadge} className="cart-badge-pointer" onClick={toggleCartSummary}>{cartItems.reduce((sum, item) => sum + item.quantity, 0)}</span>
+                        <span id="test_id" style={styles.cartBadge} className="cart-badge-pointer" onClick={toggleCartSummary}>{cartItems.reduce((sum, item) => sum + item.quantity, 0)}</span>
                     )}
                     {showCartSummary && (
                         <div style={styles.cartSummary}>
