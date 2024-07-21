@@ -177,7 +177,7 @@ const Layout = ({ children }: LayoutProps) => {
                     <body>
                         <div style={styles.container}>
                             <CustomNavbar setShowAccountSelection={setShowAccountSelection} />
-                            {createButton()}
+                            {/* {createButton()} */}
                             <div style={styles.main}>
                                 <Sidebar />
                                 <div style={styles.content}>{children}</div>
@@ -213,24 +213,25 @@ const styles: Styles = {
     body: {
         margin: 0,
         padding: 0,
-        height: "100vh",
-        overflow: "hidden",
+        // height: "100vh",
+        overflow: "scroll",
     },
     container: {
         fontFamily: "Arial, sans-serif",
         display: "flex",
         flexDirection: "column",
         height: "100vh",
+        // paddingBottom: "3rem",
     },
     main: {
         display: "flex",
         flex: 1,
         overflow: "hidden",
+        paddingBottom: "3rem",
     },
     content: {
         padding: "1rem",
         flex: 1,
-        overflow: "hidden",
     },
     blurBg: {
         fontFamily: "Arial, sans-serif",

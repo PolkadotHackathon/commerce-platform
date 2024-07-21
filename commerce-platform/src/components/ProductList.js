@@ -107,7 +107,7 @@ const styles = {
   productList: {
     display: "grid",
     gridTemplateColumns: "repeat(auto-fill, minmax(200px, 1fr))",
-    gap: "1rem",
+    gap: "0rem 1rem",
     overflowY: "auto",
     padding: "1rem 0", // Padding for better spacing
   },
@@ -119,9 +119,10 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    height: "calc(45vh - 2rem)", // Reduced height
+    height: "calc(40vh - 2rem)", // Reduced height
     padding: "1rem",
     cursor: "pointer",
+    marginBottom: "1rem", // Add margin at the bottom
   },
   imageContainer: {
     position: "relative",
