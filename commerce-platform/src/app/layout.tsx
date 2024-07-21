@@ -36,6 +36,7 @@ const Layout = ({ children }: LayoutProps) => {
         const api: ApiPromise = await ApiPromise.create({ provider });
         setApi(api);
         setKeyring(new Keyring({ type: "sr25519" }));
+
     };
 
     const handleConnection = async () => {
