@@ -24,6 +24,7 @@ const Sidebar = () => {
             <ul style={styles.ul}>
                 {categories.map((category) => (
                     <li
+                        id={`category-${category.name}`}
                         key={category.name}
                         style={
                             selectedCategory === category.name

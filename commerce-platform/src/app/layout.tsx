@@ -113,16 +113,11 @@ const Layout = ({ children }: LayoutProps) => {
                 const encryptedArray = Array.from(encryptedBytes.words);
 
                 // Push encrypted values to the blockchain 
-                // TODO: Make this use the right time
-                const unsub = await api.tx.dbModule.updateClick(3, selectedAccount.address, encryptedArray, 0);
-                unsub.send({ nonce: nonce_val });
-                setNonceVal(nonce_val + 1);
+                const unsub = await api.tx.dbModule.updateClick(3, selectedAccount.address, encryptedArray, Date.now());
+
+                unsub.send();
                 console.log("Unsub:", unsub);  // Debugging line to ensure the unsub is working
 
-                // Decrypt
-                // const bytes = CryptoJS.AES.decrypt(encrypted, SECRET_KEY);
-                // const decrypted = bytes.toString(CryptoJS.enc.Utf8);
-                // console.log('Decrypted:', decrypted);
                 console.log("Encrypted Array:", encryptedArray);  // Debugging line to ensure encryption is working
 
                 // Decrypt
