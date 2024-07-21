@@ -30,8 +30,9 @@ const Layout = ({ children }: LayoutProps) => {
     const [showAccountSelection, setShowAccountSelection] = useState(false);
 
     const setup = async () => {
+        // WARNING: ENSURE CORRECT ENDPOINT IS USED
         // const provider = new WsProvider("ws://localhost:9944");
-        const provider = new WsProvider("wss://short-sheep-sniff.loca.lt");
+        const provider = new WsProvider("wss://wet-games-sneeze.loca.lt");
         const api: ApiPromise = await ApiPromise.create({ provider });
         setApi(api);
         setKeyring(new Keyring({ type: "sr25519" }));
