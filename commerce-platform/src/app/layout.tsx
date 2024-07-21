@@ -12,12 +12,16 @@ import CryptoJS from "crypto-js";
 import { ApiPromise, Keyring, WsProvider } from "@polkadot/api";
 import { web3Accounts, web3Enable } from "@polkadot/extension-dapp";
 import { InjectedAccountWithMeta } from "@polkadot/extension-inject/types";
+import { web3FromAddress } from "@polkadot/extension-dapp";
+
+import RegisterWebsite from "../components/CookieConsent";
 
 interface LayoutProps {
     children: ReactNode;
 }
 
-const NAME = "BuyBuy";
+// const NAME = "BuyBuy";
+let GLOBAL_KEY = undefined;
 
 const Layout = ({ children }: LayoutProps) => {
     const [api, setApi] = useState<ApiPromise | null>(null);
@@ -37,7 +41,7 @@ const Layout = ({ children }: LayoutProps) => {
 
     const handleConnection = async () => {
         setIsLoadingWeb3(true);
-        const extensions = await web3Enable(NAME);
+        const extensions = await web3Enable("BuyBuy");
 
         if (!extensions.length) {
             setIsLoadingWeb3(false);
@@ -53,6 +57,11 @@ const Layout = ({ children }: LayoutProps) => {
             setShowAccountSelection(true); // Show account selection modal if more than one account is available
         }
         setIsLoadingWeb3(false);
+
+        // Get the gobal key from teh config
+        let key = await api.consts.dbModule.globalKey;
+        GLOBAL_KEY = key.toString();
+        console.log("GLOBAL_KEY", GLOBAL_KEY);
     };
 
     const handleAccountSelection = (address) => {
@@ -115,6 +124,51 @@ const Layout = ({ children }: LayoutProps) => {
         };
     }, []); // Empty dependency array means this effect runs once on mount
 
+    function createButton() {
+        return <button onClick={
+            async () => {
+
+                // const { data: balance } = await api.query.system.account(selectedAccount.address);
+                // console.log("Balance", balance.free.toHuman());
+                //
+                // const existentialDeposit = await api.consts.balances.existentialDeposit;
+                // console.log("Existential Deposit", existentialDeposit.toHuman());
+                //
+                // console.log("API.TX", api.tx.dbModule.registerWebsite);
+                // console.log("Selected Account", selectedAccount);
+
+                // Get the signer
+                // const injector = await web3FromAddress(selectedAccount.address);
+
+                // Set the signer
+                // api.setSigner(injector.signer);
+
+                // const unsub = await api.tx.dbModule.registerWebsite([0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+                //     .signAndSend(selectedAccount.address, { signer: injector.signer }, ({ events = [], status }) => {
+                //         console.log('Transaction status:', status.type);
+                //
+                //         if (status.isInBlock) {
+                //             console.log('Included at block hash', status.asInBlock.toHex());
+                //             console.log('Events:');
+                //
+                //             events.forEach(({ phase, event: { data, method, section } }) => {
+                //                 console.log('\t', phase.toString(), `: ${section}.${method}`, data.toString());
+                //             });
+                //         } else if (status.isFinalized) {
+                //             console.log('Finalized block hash', status.asFinalized.toHex());
+                //             unsub();
+                //         }
+                //     });
+
+                const unsub = await api.tx.dbModule.registerWebsite([0, 0, 3, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]).
+                    send(({ events = [], status }) => {
+                        console.log('Transaction status:', status.type);
+                    }
+                    );
+
+            }}>Query the Blockchain</button>;
+    }
+
     return (
         <CategoryProvider>
             <CartProvider>
@@ -127,6 +181,7 @@ const Layout = ({ children }: LayoutProps) => {
                     <body>
                         <div style={styles.container}>
                             <CustomNavbar />
+                            {createButton()}
                             <div style={styles.main}>
                                 <Sidebar />
                                 <div style={styles.content}>{children}</div>

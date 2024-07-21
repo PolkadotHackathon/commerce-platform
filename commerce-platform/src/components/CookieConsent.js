@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
+const { ApiPromise, WsProvider } = require('@polkadot/api');
 
 const CookieConsent = ({ onAccept, onDecline }) => {
     return (
         <div style={styles.modal}>
             <div style={styles.modalContent}>
-                {/*<img src="/assets/images/cookie-icon.svg" alt="Cookie Icon" style={styles.icon} />*/}
                 <h2 style={styles.title}>Cookies Consent</h2>
                 <p style={styles.text}>
                     This website use cookies to provide a superior and more personalized browsing experience.
