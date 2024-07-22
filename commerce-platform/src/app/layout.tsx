@@ -31,8 +31,8 @@ const Layout = ({ children }: LayoutProps) => {
 
     const setup = async () => {
         // WARNING: ENSURE CORRECT ENDPOINT IS USED
-        // const provider = new WsProvider("ws://localhost:9944");
-        const provider = new WsProvider("wss://rude-stars-work.loca.lt");
+        const provider = new WsProvider("ws://localhost:9944");
+        // const provider = new WsProvider("wss://rude-stars-work.loca.lt");
         const api: ApiPromise = await ApiPromise.create({ provider });
         setApi(api);
         setKeyring(new Keyring({ type: "sr25519" }));
